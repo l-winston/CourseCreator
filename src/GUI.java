@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -20,9 +21,9 @@ public class GUI {
 
 	public static final int IMAGE_WIDTH = 500;
 	public static final int IMAGE_HEIGHT = 500;
-	public static final int TIME_INTERVAL = 50;// time interval between
-												// updating positon of Player(s)
-												// in millis
+	public static final int TIME_INTERVAL = 50;
+	
+	public static boolean mouseIn = false;
 
 	public static ArrayList<HoneyComb> hcs = new ArrayList<HoneyComb>();
 
@@ -41,6 +42,15 @@ public class GUI {
 			manualPlayer.updatePos();
 			draw(honeycomb);
 			manualPlayer.draw(g2d);
+			if(mouseIn){
+				Point location = MouseInfo.getPointerInfo().getLocation();
+				double x = location.x;
+				x -= frame.getWidth()/2;
+				x /= frame.getWidth()/2;
+				
+				manualPlayer.turnSpeed = x*Math.PI/1.5;
+				System.out.print(x);
+			}
 		}
 	}
 
@@ -103,6 +113,7 @@ public class GUI {
 		jl.getActionMap().put("right", right);
 		jl.addMouseListener(new MyML());
 		
+		frame.setUndecorated(true);
 		frame.pack();
 		frame.setVisible(true);
 		jl.setFocusable(true);
@@ -126,5 +137,4 @@ public class GUI {
 
 		}
 	}
-
 }

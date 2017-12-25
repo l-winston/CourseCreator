@@ -11,6 +11,7 @@ public class MyML implements MouseListener{
 	@Override
 	public void mousePressed(MouseEvent e) {
 		GUI.clicked(e.getX(), e.getY());
+		GUI.mouseIn = true;
 	}
 
 	@Override
@@ -21,13 +22,14 @@ public class MyML implements MouseListener{
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
+		GUI.mouseIn = true;
+
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
+		GUI.mouseIn = false;
 		
 	}
 }
