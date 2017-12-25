@@ -15,10 +15,14 @@ public class GUI {
 	public static BufferedImage image;
 	public static Graphics2D g2d;
 	public static Area walls = new Area();
+	
+	public static Player manualPlayer = new Player(0, 0, 0, 0);
 
 	public static final int IMAGE_WIDTH = 500;
 	public static final int IMAGE_HEIGHT = 500;
-	public static final int TIME_INTERVAL = 100;//time interval between updating positon of Player(s) in millis
+	public static final int TIME_INTERVAL = 50;// time interval between
+												// updating positon of Player(s)
+												// in millis
 
 	public static ArrayList<HoneyComb> hcs = new ArrayList<HoneyComb>();
 
@@ -32,11 +36,11 @@ public class GUI {
 
 		draw(honeycomb);
 		
-		
-		
 		while (true) {
-			updateWalls();
-			
+			//updateWalls();
+			manualPlayer.updatePos();
+			draw(honeycomb);
+			manualPlayer.draw(g2d);
 		}
 	}
 
@@ -55,6 +59,8 @@ public class GUI {
 	}
 
 	private static void draw(HoneyComb honeycomb) {
+		g2d.setColor(Color.gray);
+		g2d.fillRect(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
 
 		Hexagon[][] hc = honeycomb.array;
 
@@ -80,13 +86,15 @@ public class GUI {
 
 		Action left = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("left");
+				manualPlayer.bearing -= Math.toRadians(15);
+				System.out.println(manualPlayer.turnSpeed);
 			}
 		};
 
 		Action right = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("right");
+				manualPlayer.bearing += Math.toRadians(15);
+				System.out.println(manualPlayer.turnSpeed);
 			}
 		};
 		jl.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "left");
@@ -94,6 +102,7 @@ public class GUI {
 		jl.getActionMap().put("left", left);
 		jl.getActionMap().put("right", right);
 		jl.addMouseListener(new MyML());
+		
 		frame.pack();
 		frame.setVisible(true);
 		jl.setFocusable(true);
