@@ -1,7 +1,9 @@
 import java.awt.Polygon;
+import java.awt.geom.Area;
 import java.awt.geom.Line2D;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -10,9 +12,11 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        final Polygon poly = new Polygon(new int[]{1,2,2,1}, new int[]{1,1,2,2}, 4);
+    	 final  Area poly = new Area();
+    	// final  Area poly = new Area(new Rectangle2D.Double(2.5, 1.3, 1.3, 3.5));
         final Line2D.Double line = new Line2D.Double(2.5, 1.3, 1.3, 3.5);
         final Set<Point2D> intersections = getIntersections(poly, line);
+        
         for(Iterator<Point2D> it = intersections.iterator(); it.hasNext();) {
             final Point2D point = it.next();
             System.out.println("Intersection: " + point.toString());
@@ -20,7 +24,7 @@ public class Main {
 
     }
 
-    public static Set<Point2D> getIntersections(final Polygon poly, final Line2D.Double line) throws Exception {
+    public static Set<Point2D> getIntersections(final Area poly, final Line2D.Double line) throws Exception {
 
         final PathIterator polyIt = poly.getPathIterator(null); //Getting an iterator along the polygon path
         final double[] coords = new double[6]; //Double array with length 6 needed by iterator

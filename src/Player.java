@@ -5,12 +5,13 @@ import java.util.ArrayList;
 
 public class Player {
 	public static double velocity = 50;
+	public static double feelerLength = 1000;
 
-	public int x, y;
+	public double x, y;
 	public double bearing, turnSpeed;
 	public ArrayList<Line2D.Double> feelers = new ArrayList<Line2D.Double>();
 
-	public Player(int x, int y, double bearing, double turnSpeed) {
+	public Player(double x, double y, double bearing, double turnSpeed) {
 		this.x = x;
 		this.y = y;
 		this.bearing = bearing;
@@ -19,19 +20,15 @@ public class Player {
 
 	public void updatePos() {
 		this.bearing += this.turnSpeed / (1000 / GUI.TIME_INTERVAL);
-		this.x += this.velocity / (1000 / GUI.TIME_INTERVAL) * Math.cos(bearing);
-		this.y += this.velocity / (1000 / GUI.TIME_INTERVAL) * Math.sin(bearing);
-		try {
-			Thread.sleep(GUI.TIME_INTERVAL);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		double deltaX = this.velocity / (1000 / GUI.TIME_INTERVAL) * Math.cos(bearing);
+		double deltaY = this.velocity / (1000 / GUI.TIME_INTERVAL) * Math.sin(bearing);
+		this.x += deltaX;
+		this.y += deltaY;
 	}
 
 	public void draw(Graphics2D g2d) {
 		g2d.setColor(Color.blue);
-		g2d.fillOval(x - (10 / 2), y - (10 / 2), 10, 10);
+		g2d.fillOval(GUI.toInt(x - (10 / 2)), GUI.toInt(y - (10 / 2)), 10, 10);
 		drawLines(g2d);
 	}
 
@@ -45,11 +42,11 @@ public class Player {
 		
 		feelers = new ArrayList<Line2D.Double>();
 		
-		feelers.add(new Line2D.Double(x, y,x-100*Math.cos(angleW), y-100*Math.sin(angleW)));
-		feelers.add(new Line2D.Double(x, y,x-100*Math.cos(angleNW), y-100*Math.sin(angleNW)));
-		feelers.add(new Line2D.Double(x, y,x-100*Math.cos(angleN), y-100*Math.sin(angleN)));
-		feelers.add(new Line2D.Double(x, y,x-100*Math.cos(angleNE), y-100*Math.sin(angleNE)));
-		feelers.add(new Line2D.Double(x, y,x-100*Math.cos(angleE), y-100*Math.sin(angleE)));
+		feelers.add(new Line2D.Double(x, y,x-feelerLength*Math.cos(angleW), y-feelerLength*Math.sin(angleW)));
+		feelers.add(new Line2D.Double(x, y,x-feelerLength*Math.cos(angleNW), y-feelerLength*Math.sin(angleNW)));
+		feelers.add(new Line2D.Double(x, y,x-feelerLength*Math.cos(angleN), y-feelerLength*Math.sin(angleN)));
+		feelers.add(new Line2D.Double(x, y,x-feelerLength*Math.cos(angleNE), y-feelerLength*Math.sin(angleNE)));
+		feelers.add(new Line2D.Double(x, y,x-feelerLength*Math.cos(angleE), y-feelerLength*Math.sin(angleE)));
 
 		for(Line2D.Double l: feelers){
 			g2d.draw(l);

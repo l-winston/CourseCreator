@@ -1,4 +1,5 @@
 import java.awt.Polygon;
+import java.awt.geom.Path2D;
 
 public class Hexagon {
 	public double radius;
@@ -8,9 +9,9 @@ public class Hexagon {
 	
 	public double distToSide, sideLength;
 	
-	public Polygon poly;
+	public Path2D path = new Path2D.Double();
 
-	public boolean isWall = false;
+	public boolean isWall = true;
 
 	public boolean offset;
 	public int i;
@@ -28,17 +29,17 @@ public class Hexagon {
 		int xOffset = (int) (this.radius + this.j * (this.sideLength / 2 + this.radius));
 		int yOffset = (int) (this.radius
 				+ (this.offset ? this.i * 2 * this.distToSide : this.i * 2 * this.distToSide + this.distToSide));
-		
-		int[] xpoints = new int[Hexagon.verticies];
-		int[] ypoints = new int[Hexagon.verticies];
+
 
 		for (int v = 0; v < Hexagon.verticies; v++) {
-			
-			xpoints[v] = (int) Math.round(xOffset + this.radius * Math.cos(v * this.internalDeg));
-			ypoints[v] = (int) Math.round(yOffset + this.radius * Math.sin(v * this.internalDeg));
-			
+			double x = xOffset + (this.radius+0.5) * Math.cos(v * this.internalDeg);
+			double y = yOffset + (this.radius+0.5) * Math.sin(v * this.internalDeg);
+			if(v == 0){
+				path.moveTo(x, y);
+			}else{
+				path.lineTo(x, y);
+			}
 		}
-		
-		poly = new Polygon(xpoints, ypoints, Hexagon.verticies);
+		path.closePath();
 	}
 }
