@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.geom.*;
 import java.awt.image.BufferedImage;
@@ -13,8 +14,8 @@ public class GUI {
 	public static Graphics2D g2d;
 	public static Area walls = new Area();
 
-	public static final int IMAGE_WIDTH = 1000;
-	public static final int IMAGE_HEIGHT = 1000;
+	public static final int IMAGE_WIDTH = 750;
+	public static final int IMAGE_HEIGHT = 750;
 	public static final int TIME_INTERVAL = 50;
 
 	public static Player manualPlayer = new Player(IMAGE_WIDTH / 2, IMAGE_HEIGHT / 2, 0, 0);
@@ -37,7 +38,6 @@ public class GUI {
 			updateWalls();
 			g2d.setColor(Color.white);
 			g2d.fill(walls);
-			System.out.println(walls.isSingular());
 			manualPlayer.updatePos();
 			draw(board);
 			manualPlayer.draw(g2d);
@@ -123,6 +123,14 @@ public class GUI {
 		jl.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "right");
 		jl.addMouseListener(new MyML());
 
+		jl.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "save");
+		
+		Action save = new AbstractAction() {
+  			public void actionPerformed(ActionEvent e) {
+ 				
+  			}
+  		};
+		
 		frame.setUndecorated(true);
 		frame.pack();
 		frame.setVisible(true);
