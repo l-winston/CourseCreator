@@ -19,7 +19,6 @@ public class Hexagon {
 	public Hexagon(int i, int j, boolean offset, double radius) {
 		this.i = i;
 		this.j = j;
-		System.out.println(i + " " + j);
 		
 		this.offset = offset;
 		this.radius = radius;

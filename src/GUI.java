@@ -49,7 +49,6 @@ public class GUI {
 				x /= frame.getWidth()/2;
 				
 				manualPlayer.turnSpeed = x*Math.PI/1.5;
-				System.out.print(x);
 			}
 		}
 	}
@@ -104,7 +103,6 @@ public class GUI {
 		Action right = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				manualPlayer.bearing += Math.toRadians(15);
-				System.out.println(manualPlayer.turnSpeed);
 			}
 		};
 		jl.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "left");
